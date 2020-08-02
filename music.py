@@ -11,7 +11,6 @@ from functions.extract_info import (
         get_tags
         )
 
-from Naked.toolshed.shell import execute_js, muterun_js
 from matrix_client.client import MatrixClient
 from matrix_client.api import MatrixRequestError
 
