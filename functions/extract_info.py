@@ -1,7 +1,7 @@
 import youtube_dl
 import pylast
 from youtube_title_parse import get_artist_title
-from lastfm_init import lastfm_network
+from functions.lastfm_init import lastfm_network
 
 def get_title(url):
     ytdl_opts = {'source_address': '0.0.0.0'}

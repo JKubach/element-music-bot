@@ -3,8 +3,8 @@
 import sys
 import re
 import configparser
-import element_functions
-from extract_info_functions import (
+import functions.element as element
+from functions.extract_info import (
         get_title,
         get_artist_song,
         get_artist_info,
@@ -72,7 +72,7 @@ def main():
     client.start_listener_thread()
 
     while True:
-        msg = element_functions.get_input()
+        msg = element.get_input()
         room.send_text(msg)
 
 
