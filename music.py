@@ -28,26 +28,37 @@ def parse_config():
     return host, user, password, room_id
 
 
+def youtube(event):
+    message = event['content']['body']
+    message = message.split()
+    url = message[0]
+    
+    title = get_title(url)
+    song_info = [title]
+
+    artist, song = get_artist_song(title)
+
+    if artist:
+        tags = get_tags(artist)
+        bio = get_artist_info(artist)
+
+        song_info.append("Genre: " + tags)
+        song_info.append(re.sub('<.*?>', '', bio))
+
+    return song_info
+
+
+def send_message(room, message):
+    for m in message:
+        room.send_text(m)
+
+
 def on_message(room, event):
     if event['type'] == 'm.room.message':
         if event['content']['msgtype'] == "m.text":
             if 'youtube.com' in event['content']['body'] or 'youtu.be' in event['content']['body']:
-                message = event['content']['body']
-                message = message.split()
-                url = message[0]
-
-                title = get_title(url)
-                artist, song = get_artist_song(title)
-
-                room.send_text(title)
-
-                if artist:
-                    tags = get_tags(artist)
-                    bio = get_artist_info(artist)
-
-                    room.send_text("Genre: " + tags)
-
-                    room.send_text(re.sub('<.*?>', '', bio))
+                message = youtube(event)
+                send_message(room, message)
 
 
 def main():
