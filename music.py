@@ -32,9 +32,9 @@ def on_message(room, event):
     if event['type'] == 'm.room.message':
         if event['content']['msgtype'] == "m.text":
             if 'youtube.com' in event['content']['body'] or 'youtu.be' in event['content']['body']:
-                words = event['content']['body']
-                words = words.split()
-                url = words[0]
+                message = event['content']['body']
+                message = message.split()
+                url = message[0]
 
                 title = get_title(url)
                 artist, song = get_artist_song(title)
