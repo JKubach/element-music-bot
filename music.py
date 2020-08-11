@@ -42,8 +42,9 @@ def youtube(event):
         tags = get_tags(artist)
         bio = get_artist_info(artist)
 
-        song_info.append("Genre: " + tags)
-        song_info.append(re.sub('<.*?>', '', bio))
+        if tags and bio:
+            song_info.append("Genre: " + tags)
+            song_info.append(re.sub('<.*?>', '', bio))
 
     return song_info
 

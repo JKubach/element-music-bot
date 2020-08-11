@@ -22,15 +22,22 @@ def get_artist_song(title):
     return artist, song
 
 def get_artist_info(artist):
-    info = lastfm_network.get_artist(artist).get_bio_summary()
+    try:
+        info = lastfm_network.get_artist(artist).get_bio_summary()
+    except pylast.WSError as e:
+        info = None
+
     return info
 
 def get_tags(artist):
-    info = lastfm_network.get_artist(artist).get_top_tags(limit=2)
-    genre_list = []
-    for t in info:
-        genre_list.append(t.item.get_name())
+    try:
+        info = lastfm_network.get_artist(artist).get_top_tags(limit=2)
+        genre_list = []
+        for t in info:
+            genre_list.append(t.item.get_name())
 
-    format_tags = ', '.join(genre_list)
+        format_tags = ', '.join(genre_list)
+    except pylast.WSError as e:
+        format_tags = None
 
     return format_tags
