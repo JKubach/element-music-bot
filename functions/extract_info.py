@@ -3,14 +3,15 @@ import pylast
 from youtube_title_parse import get_artist_title
 from functions.lastfm_init import lastfm_network
 
-def get_title(url):
+def get_video_info(url):
     ytdl_opts = {'source_address': '0.0.0.0'}
     ydl = youtube_dl.YoutubeDL(ytdl_opts)
     with ydl:
         video = ydl.extract_info(url, download=False)
         title = video['title']
+        description = video['description']
 
-    return title
+    return (title, description)
 
 def get_artist_song(title):
     try:

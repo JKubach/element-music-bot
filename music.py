@@ -5,7 +5,7 @@ import re
 import configparser
 import functions.element as element
 from functions.extract_info import (
-        get_title,
+        get_video_info,
         get_artist_song,
         get_artist_info,
         get_tags
@@ -33,7 +33,7 @@ def youtube(event):
     message = message.split()
     url = message[0]
     
-    title = get_title(url)
+    title, desc = get_video_info(url)
     song_info = [title]
 
     artist, song = get_artist_song(title)
@@ -45,6 +45,8 @@ def youtube(event):
         if tags and bio:
             song_info.append("Genre: " + tags)
             song_info.append(re.sub('<.*?>', '', bio))
+    else:
+        song_info.append(desc)
 
     return song_info
 
